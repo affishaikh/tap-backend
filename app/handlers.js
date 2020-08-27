@@ -1,5 +1,6 @@
 const {sendOTP} = require('./mail')
 const {saveStudent} = require('./db/crudOperations')
+const {findByEmail} = require('./db/crudOperations')
 
 const generateOTP = () => Math.floor(Math.random() * 99999)
 
@@ -12,4 +13,16 @@ const registerStudent = function (req, res) {
     })
 }
 
-module.exports = {registerStudent}
+const validateOTP = function (req, res) {
+    const {email, otp} = req.body
+    findByEmail(email).then(student => {
+            if (student.otp == otp) {
+                res.send("OTP valid")
+            } else {
+                res.status(401).send("OTP not valid")
+            }
+        }
+    )
+}
+
+module.exports = {registerStudent, validateOTP}

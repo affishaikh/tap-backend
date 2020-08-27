@@ -10,4 +10,12 @@ const saveStudent = function (student) {
         });
 }
 
-module.exports = {saveStudent}
+const findByEmail = function (email) {
+    return connection
+        .then(client => {
+            const db = client.db(TAP_DB)
+            return db.collection(STUDENTS_COLLECTION).findOne({email: email})
+        });
+}
+
+module.exports = {saveStudent, findByEmail}
