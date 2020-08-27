@@ -8,14 +8,14 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-const sendMail = function (name, email) {
-    const message = createMessage(name, email)
+const sendOTP = function (name, email, otp) {
+    const message = createMessage(name, email, otp)
     return transporter.sendMail(message)
 }
 
-const createMessage = function (name, email) {
+const createMessage = function (name, email, otp) {
     const subject = "TAP Email Verification"
-    const text = `Hello ${name},\n\nHere's the OTP ${generateOTP()}`
+    const text = `Hello ${name},\n\nHere's the OTP ${otp}`
 
     return {
         from: `Aftab Shaikh <${process.env.USER_NAME}>`,
@@ -25,6 +25,4 @@ const createMessage = function (name, email) {
     }
 }
 
-const generateOTP = () => Math.floor(Math.random() * 99999)
-
-module.exports = {sendMail}
+module.exports = {sendOTP}
