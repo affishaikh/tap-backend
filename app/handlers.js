@@ -9,7 +9,7 @@ const registerStudent = function (req, res) {
     const otp = generateOTP()
     sendOTP(student.name, student.email, otp)
     saveStudent({...student, otp}).then(() => {
-        res.send("Student registration successful")
+        res.status(200).send()
     })
 }
 
@@ -17,9 +17,9 @@ const validateOTP = function (req, res) {
     const {email, otp} = req.body
     findByEmail(email).then(student => {
             if (student.otp == otp) {
-                res.send("OTP valid")
+                res.status(200).send()
             } else {
-                res.status(401).send("OTP not valid")
+                res.status(401).send()
             }
         }
     )
